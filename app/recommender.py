@@ -43,7 +43,8 @@ def _ensure_loaded() -> _State:
     scaler = joblib.load(MODEL_DIR / "scaler.joblib")
     knn = joblib.load(MODEL_DIR / "knn.joblib")
 
-    # lookup.csv was saved in the same order as training data; indices must match knn index
+    # lookup.csv was saved in the same order as training data,
+	# indices must match knn index
     lookup = pd.read_csv(LOOKUP_CSV)
 
     _STATE = _State(tfidf=tfidf, scaler=scaler, knn=knn, lookup=lookup)
@@ -64,10 +65,10 @@ def _vectorize_rows(df_rows: pd.DataFrame, tfidf, scaler):
         if c not in rows:
             rows[c] = 0.0
 
-    # Text → TF-IDF
+    # Text -> TF-IDF
     X_text = tfidf.transform(rows["product_title"].astype(str))
 
-    # Numeric → log1p then StandardScaler
+    # Numeric -> log1p then StandardScaler
     num = rows[_NUM_COLS].copy()
     if "product_price" in num:
         num["product_price"] = np.log1p(num["product_price"].clip(lower=0))
