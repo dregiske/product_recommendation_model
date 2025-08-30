@@ -1,11 +1,8 @@
 '''
 Data cleaner for Kaggle dataset
 Instructions:
-1) Download Kaggle dataset:
-https://www.kaggle.com/datasets/sanskar21072005/amazon-best-sellers-2025?resource=download
 
-2) Run cleaner:
-python3 data_cleaner.py --in_csv dataset/Amazon_bestsellers_items_2025.csv --out_csv dataset/amazon_bestsellers_clean.csv
+python3 scripts/data_cleaner.py --in_csv dataset/Amazon_bestsellers_items_2025.csv --out_csv dataset/amazon_bestsellers_clean.csv
 '''
 
 import re
