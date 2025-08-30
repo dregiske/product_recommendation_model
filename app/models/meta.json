@@ -1,0 +1,9 @@
+{
+  "neighbors": 50,
+  "numeric_cols": [
+    "product_price",
+    "product_star_rating",
+    "product_num_ratings"
+  ],
+  "metric": "cosine"
+}
