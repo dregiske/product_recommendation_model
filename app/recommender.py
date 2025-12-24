@@ -12,7 +12,6 @@ from scipy.sparse import hstack
 
 
 # ---------- Config ----------
-# You can override these via environment variables if desired
 MODEL_DIR = Path(os.getenv("MODEL_DIR", "app/models")).resolve()
 LOOKUP_CSV = MODEL_DIR / "lookup.csv"   # produced by build_knn.py
 DEFAULT_K = int(os.getenv("DEFAULT_K", "5"))
