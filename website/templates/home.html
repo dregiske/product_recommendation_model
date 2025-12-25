@@ -5,18 +5,74 @@
 	<h1 class="title">Similar Product Finder</h1>
 	
 	<form method="POST">
-		<h3 class="form-group">
+		<h3 class="prompt">
 			What product would you like to find today?
 		</h3>
-		<label for="product-name">Product Name</label>
-		<input
-			type="product-name"
-			class="form-control"
-			id="product-name"
-			name="product-name"
-			placeholder="Product Name"
-		>
-		<label for="product-price"
+		<div class="form-group">
+			<label for="product_name">Product Name</label>
+			<input
+				type="text"
+				class="form-control"
+				id="product-name"
+				name="product-name"
+				placeholder="Enter Name"
+			/>
+		</div>
+		<div class="form-group">
+			<label for="price">Price</label>
+			<input
+				type="number"
+				class="form-control"
+				id="product-price"
+				name="product-price"
+				placeholder="Enter Price"
+				min="0"
+			/>
+		</div>
+		<div class="form-group">
+			<label for="country">Country</label>
+			<input
+				type="country"
+				class="text"
+				id="country"
+				name="country"
+				placeholder="Enter Country (2 characters)"
+				maxlength="2"
+			/>
+		</div>
+		<div class="form-group">
+			<label for="rating">Rating</label>
+			<input
+				type="rating"
+				class="form-control"
+				id="rating"
+				name="rating"
+				placeholder="Enter Rating"
+				min="0"
+				max="5"
+				step="0.1"
+			/>
+		</div>
+		<br>
+		<button type="submit" class="btn btn-primary">Search</button>
 	</form>
+
+	{% if results %}
+	<hr />
+	<h3 class="results">Similar Products</h3>
+	<div class="list-group">
+		{% for product in results %}
+			<a href="{{ product.product_url }}" class="list-group-item list-group-item-action" target="_blank">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">{{ product.product_title }}</h5>
+					<small>Similarity: {{ "%.3f"|format(product.similarity) }}</small>
+				</div>
+				<p class="mb-1">
+					${{ product.price }} | Rating: {{ product.rating }} | Total Ratings: {{ product.num_rating }} | Country: {{ product.country }}
+				</p>
+			</a>
+		{% endfor %}
+	</div>
+	{% endif %}
 </div>
 {% endblock %}

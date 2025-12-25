@@ -17,15 +17,15 @@ class User(db.model, UserMixin):
 
 class Product(db.model):
 	id				= db.Column(db.Integer, primary_key=True)
-	name			= db.Column(db.String(100))
-	country			= db.Column(db.String(2))
+	product_name	= db.Column(db.String(100))
 	price			= db.Column(db.Integer)
+	country			= db.Column(db.String(2))
 	rating			= db.Column(db.Integer)
 	num_rating		= db.Column(db.Integer)
 	search_history	= db.relationship(
 		'SearchHistory',
 		backref='product',
-		lazy=True
+		lazy=True,
 	)
 
 class SearchHistory(db.model):

@@ -8,6 +8,18 @@ import json
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
+@login_required
+def home():
+	results = None
+	if request.method == 'POST':
+		name = request.method.get('product-name')
+		price = request.method.get('price', type=float)
+		country = request.method.get('country')
+		rating = request.method.get('rating', type=float)
+
+		
+
+	return render_template("home.html", user=current_user, results=results)
 
 @views.route('/add-product', methods=['GET', 'POST'])
 @login_required
