@@ -1,21 +1,25 @@
 from __future__ import annotations
 
 import os
+
 from dataclasses import dataclass
+
 from pathlib import Path
+
 from typing import List, Dict, Any, Optional
 
 import joblib
-import numpy as np
-import pandas as pd
-from scipy.sparse import hstack
 
+import numpy as np
+
+import pandas as pd
+
+from scipy.sparse import hstack
 
 # ---------- Config ----------
 MODEL_DIR = Path(os.getenv("MODEL_DIR", "app/models")).resolve()
 LOOKUP_CSV = MODEL_DIR / "lookup.csv"   # produced by build_knn.py
 DEFAULT_K = int(os.getenv("DEFAULT_K", "5"))
-
 
 # ---------- Internal state ----------
 @dataclass
@@ -25,9 +29,7 @@ class _State:
     knn: Any
     lookup: pd.DataFrame  # same row order used during training
 
-
 _STATE: Optional[_State] = None
-
 
 # ---------- Loading ----------
 def _ensure_loaded() -> _State:
@@ -49,10 +51,8 @@ def _ensure_loaded() -> _State:
     _STATE = _State(tfidf=tfidf, scaler=scaler, knn=knn, lookup=lookup)
     return _STATE
 
-
 # ---------- Featurization (must mirror training) ----------
 _NUM_COLS = ["product_price", "product_star_rating", "product_num_ratings"]
-
 
 def _vectorize_rows(df_rows: pd.DataFrame, tfidf, scaler):
     # Make sure required columns exist
@@ -79,8 +79,6 @@ def _vectorize_rows(df_rows: pd.DataFrame, tfidf, scaler):
     # Combine (sparse text + dense numeric)
     return hstack([X_text, X_num]).tocsr()
 
-
-# ---------- Public API ----------
 def recommend(asin: str, k: int = DEFAULT_K, same_country: bool = False) -> List[Dict[str, Any]]:
     """
     Return up to k similar products for a given ASIN.
