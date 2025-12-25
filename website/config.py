@@ -5,6 +5,8 @@ class Settings(BaseSettings):
 
 	SECRET_KEY = str
 
+	PORT = int
+
 class Config:
 	env_file = ".env"
 	env_file_encoding = "utf_8"
