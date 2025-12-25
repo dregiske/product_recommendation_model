@@ -1,11 +1,17 @@
 import argparse
+
 import json
+
 from pathlib import Path
 
 import joblib
+
 import numpy as np
+
 import pandas as pd
+
 from scipy.sparse import hstack
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
