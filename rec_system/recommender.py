@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from website.config import settings
+
 import os
 
 from dataclasses import dataclass
@@ -19,7 +21,6 @@ from scipy.sparse import hstack
 # ---------- Config ----------
 MODEL_DIR = Path(os.getenv("MODEL_DIR", "app/models")).resolve()
 LOOKUP_CSV = MODEL_DIR / "lookup.csv"   # produced by build_knn.py
-DEFAULT_K = int(os.getenv("DEFAULT_K", "5"))
 
 # ---------- Internal state ----------
 @dataclass
@@ -79,7 +80,7 @@ def _vectorize_rows(df_rows: pd.DataFrame, tfidf, scaler):
     # Combine (sparse text + dense numeric)
     return hstack([X_text, X_num]).tocsr()
 
-def recommend(asin: str, k: int = DEFAULT_K, same_country: bool = False) -> List[Dict[str, Any]]:
+def recommend(asin: str, k: int = settings.DEFAULT_K, same_country: bool = False) -> List[Dict[str, Any]]:
     """
     Return up to k similar products for a given ASIN.
     If same_country=True, only return neighbors from the same country as the seed item.
@@ -151,7 +152,7 @@ def recommend_adhoc(
     product_star_rating: float | None = None,
     product_num_ratings: float | None = None,
     country: str | None = None,
-    k: int = DEFAULT_K,
+    k: int = settings.DEFAULT_K,
 ) -> List[Dict[str, Any]]:
     """
     Recommend similar products for an item that is NOT in the index.
@@ -194,7 +195,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="KNN Similarity Recommender (local)")
     parser.add_argument("--asin", type=str, help="ASIN to query (must exist in lookup.csv)")
-    parser.add_argument("--k", type=int, default=DEFAULT_K)
+    parser.add_argument("--k", type=int, default=settings.DEFAULT_K)
     parser.add_argument("--same_country", action="store_true")
     parser.add_argument("--title", type=str, help="Ad-hoc title (if ASIN not provided)")
     parser.add_argument("--price", type=float, default=None)
