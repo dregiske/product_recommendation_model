@@ -17,12 +17,14 @@ class User(db.Model, UserMixin):
 
 class Product(db.Model):
 	id					= db.Column(db.Integer, primary_key=True)
+	product_asin		= db.Column(db.String(10), unique=True)
 	product_title		= db.Column(db.String(100), nullable=False)
 	product_price		= db.Column(db.Integer)
 	country				= db.Column(db.String(2))
 	poduct_star_rating	= db.Column(db.Integer)
 	product_num_ratings	= db.Column(db.Integer)
-	product_url			= db.Column(db.String(200), nullable=False, unique=True)
+	product_url			= db.Column(db.String(500), nullable=False, unique=True)
+	product_photo		= db.Column(db.String(500))
 	search_history		= db.relationship(
 		'SearchHistory',
 		backref='product',
