@@ -1,6 +1,6 @@
 from website import create_app
 
-from config import settings
+from website.config import settings
 
 app = create_app()
 

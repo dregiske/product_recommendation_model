@@ -3,7 +3,9 @@ from flask_login import login_required, current_user
 
 from rec_system.recommender import recommend_adhoc
 
-from config import settings
+from .config import settings
+
+# from .models import SearchHistory
 
 from . import db
 
@@ -31,15 +33,10 @@ def home():
 			k=settings.DEFAULT_K
 		)
 
-	return render_template("home.html", user=current_user, results=results)
+		# TODO: record searches
 
-@views.route('/add-product', methods=['GET', 'POST'])
-@login_required
-def add_search_history():
-	if request.method == 'POST':
-		# TODO: input => a product from the user, output => 5 similar products
-		# add the input product to the users search history
-		pass
+
+	return render_template("home.html", user=current_user, results=results)
 
 @views.route('/delete-product', methods=['POST'])
 def delete_search_history():

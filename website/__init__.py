@@ -6,12 +6,11 @@ from website.config import settings
 
 db = SQLAlchemy()
 
-DB_NAME = settings.DB_NAME
-
 def create_app():
 	app = Flask(__name__)
 	app.config['SECRET_KEY'] = settings.SECRET_KEY
-	app.config['SQLALCHEMY_DATABSE_URI'] = f'sqlite:///{settings.DB_NAME}'
+	app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{settings.DB_NAME}'
+	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 	db.init_app(app)
 
@@ -23,7 +22,7 @@ def create_app():
 	
 	from .models import User
 
-	while app.app_context():
+	with app.app_context():
 		db.create_all()
 
 	login_manager = LoginManager()
