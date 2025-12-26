@@ -4,6 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import User
+
 from . import db
 
 auth = Blueprint('auth', __name__)
@@ -58,7 +59,7 @@ def login():
 
 		user = User.query.filter_by(email=email).first()
 		if user:
-			if check_password_hash(password, user.password):
+			if check_password_hash(user.password, password):
 				flash('Logging in...', category='success')
 				login_user(user, remember=True)
 				return redirect(url_for('views.home'))
