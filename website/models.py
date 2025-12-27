@@ -21,7 +21,7 @@ class Product(db.Model):
 	product_title		= db.Column(db.String(100), nullable=False)
 	product_price		= db.Column(db.Integer)
 	country				= db.Column(db.String(2))
-	poduct_star_rating	= db.Column(db.Integer)
+	product_star_rating	= db.Column(db.Integer)
 	product_num_ratings	= db.Column(db.Integer)
 	product_url			= db.Column(db.String(500), nullable=False, unique=True)
 	product_photo		= db.Column(db.String(500))
